@@ -3,10 +3,10 @@ package com.harshit.demokmp.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import com.harshit.demokmp.ui.screens.LoginPage
-import com.harshit.demokmp.ui.screens.RegistrationPage
+import com.harshit.demokmp.presentation.screens.LoginPage
+import com.harshit.demokmp.presentation.screens.RegistrationPage
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import com.harshit.demokmp.ui.screens.SelectionTypePage
+import com.harshit.demokmp.presentation.screens.SelectionTypePage
 
 
 @Composable

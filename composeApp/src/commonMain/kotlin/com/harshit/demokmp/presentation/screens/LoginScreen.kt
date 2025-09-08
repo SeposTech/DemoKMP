@@ -1,4 +1,4 @@
-package com.harshit.demokmp.ui.screens
+package com.harshit.demokmp.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -25,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -36,14 +37,31 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.harshit.demokmp.domain.models.UserLoginRequest
 import com.harshit.demokmp.navigation.Route
+import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
 import demokmp.composeapp.generated.resources.Res
 import demokmp.composeapp.generated.resources.ic_app_logo_512
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun LoginPage(onNavigate:(Route)-> Unit) {
+fun LoginPage(
+    onNavigate: (Route) -> Unit,
+    loginViewModel: LoginViewModel
+) {
+
+    val loginState = loginViewModel.loginState.collectAsState(initial = null)
+
+    loginState.value?.let { result ->
+        result.onSuccess { response ->
+            // Navigate on success
+        }
+        result.onFailure { error ->
+            // Show error message
+        }
+
+    }
 
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -101,7 +119,16 @@ fun LoginPage(onNavigate:(Route)-> Unit) {
                     }
                 )
 
-                Button(modifier = Modifier.fillMaxWidth(), onClick = {onNavigate(Route.SelectionType)}) {
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = {
+                        loginViewModel.login(
+                            UserLoginRequest(
+                                email = email.value,
+                                password = password.value
+                            )
+                        )
+                    }) {
                     Text(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                         text = "Login"
@@ -158,5 +185,5 @@ fun CommonTopBar(title: String) {
 @Composable
 fun PreviewLoginPage() {
 
-    LoginPage(onNavigate = {})
+    LoginPage(onNavigate = {},)
 }

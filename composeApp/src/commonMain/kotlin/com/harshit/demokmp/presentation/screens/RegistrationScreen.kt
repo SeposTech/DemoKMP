@@ -1,4 +1,4 @@
-package com.harshit.demokmp.ui.screens
+package com.harshit.demokmp.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
