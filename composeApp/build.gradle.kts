@@ -35,6 +35,13 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.koin.android)
+
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.ios)
+            implementation(libs.koin.core)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -45,6 +52,15 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.compose.material3)
             implementation(libs.compose.material.icons.extended)
+            // Ktor core aur serialization jo dono platforms me work kare
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.json)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            // Kotlinx Serialization
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
