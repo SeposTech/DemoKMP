@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import com.harshit.demokmp.ui.screens.LoginPage
 import com.harshit.demokmp.ui.screens.RegistrationPage
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.harshit.demokmp.ui.screens.SelectionTypePage
 
 
 @Composable
@@ -33,6 +34,9 @@ fun NavHost(
             onNavigate = { navigateTo(it) },
             onBack = { goBack() })
 
-        else -> Unit
+        Route.SelectionType -> SelectionTypePage(
+            onNavigate = { navigateTo(it) },
+            onBack = { goBack() }
+        )
     }
 }

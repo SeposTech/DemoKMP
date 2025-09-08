@@ -101,7 +101,7 @@ fun LoginPage(onNavigate:(Route)-> Unit) {
                     }
                 )
 
-                Button(modifier = Modifier.fillMaxWidth(), onClick = {}) {
+                Button(modifier = Modifier.fillMaxWidth(), onClick = {onNavigate(Route.SelectionType)}) {
                     Text(
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                         text = "Login"
