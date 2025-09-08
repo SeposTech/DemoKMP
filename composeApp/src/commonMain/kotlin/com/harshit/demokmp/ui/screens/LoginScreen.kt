@@ -56,7 +56,7 @@ fun LoginPage(onNavigate:(Route)-> Unit) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(12.dp),  // important
+                    .padding(14.dp),  // important
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
