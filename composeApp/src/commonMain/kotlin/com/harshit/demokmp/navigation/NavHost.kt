@@ -14,7 +14,8 @@ import com.harshit.demokmp.presentation.screens.SelectionTypePage
 fun NavHost(
     backStack: SnapshotStateList<Route> = remember { mutableStateListOf(Route.Login) },
     onBackRequested: () -> Unit,
-    loginHandler: LoginHandler
+    loginHandler: LoginHandler,
+    canNavigateBack: Boolean
 ) {
 
     val currentScreen = backStack.last()
@@ -31,7 +32,7 @@ fun NavHost(
         }
     }
     when (currentScreen) {
-        Route.Login -> LoginPage(onNavigate = { navigateTo(it) },loginHandler)
+        Route.Login -> LoginPage(onNavigate = { navigateTo(it) },loginHandler,canNavigateBack)
         Route.Registration -> RegistrationPage(
             onNavigate = { navigateTo(it) },
             onBack = { goBack() })

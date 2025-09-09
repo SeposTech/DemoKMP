@@ -8,7 +8,7 @@ import com.harshit.demokmp.navigation.NavHost
 import com.harshit.demokmp.navigation.Route
 
 @Composable
-fun AndroidLoginEntryPoint(viewmodel: AndroidLoginViewModel){
+fun AndroidLoginEntryPoint(viewmodel: AndroidLoginViewModel,canNavigateBack: Boolean){
 
     val backStack = remember { mutableStateListOf<Route>(Route.Login) }
 
@@ -21,6 +21,7 @@ fun AndroidLoginEntryPoint(viewmodel: AndroidLoginViewModel){
         onBackRequested = {
             // Optional: finish the activity or do nothing
         },
-        viewmodel
+        viewmodel,
+        canNavigateBack = canNavigateBack
     )
 }

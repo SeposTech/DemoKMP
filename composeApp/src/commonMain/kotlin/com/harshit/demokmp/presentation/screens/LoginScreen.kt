@@ -25,7 +25,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,7 +39,6 @@ import androidx.compose.ui.unit.sp
 import com.harshit.demokmp.domain.models.UserLoginRequest
 import com.harshit.demokmp.interfaces.LoginHandler
 import com.harshit.demokmp.navigation.Route
-import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
 import demokmp.composeapp.generated.resources.Res
 import demokmp.composeapp.generated.resources.ic_app_logo_512
 import org.jetbrains.compose.resources.painterResource
@@ -49,7 +47,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun LoginPage(
     onNavigate: (Route) -> Unit,
-    loginHandler: LoginHandler
+    loginHandler: LoginHandler,
+    canNavigateBack: Boolean = false
 ) {
 
     /*val loginState = loginViewModel.loginState.collectAsState(initial = null)
@@ -69,7 +68,7 @@ fun LoginPage(
     Surface(modifier = Modifier.fillMaxSize()) {
 
         Scaffold(
-            topBar = { CommonTopBar("Login") }
+            topBar = { CommonTopBar("Login", canNavigateBack) }
         ) { paddingValues ->   // paddingValues yaha add karo
             Column(
                 modifier = Modifier
@@ -156,7 +155,7 @@ fun LoginPage(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CommonTopBar(title: String) {
+fun CommonTopBar(title: String, canNavigateBack: Boolean) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -169,13 +168,16 @@ fun CommonTopBar(title: String) {
             )
         },
         navigationIcon = {
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.White
-                )
-            }
+            if (canNavigateBack) {
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.White
+                    )
+                }
+            } else null
+
         },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Red)
     )

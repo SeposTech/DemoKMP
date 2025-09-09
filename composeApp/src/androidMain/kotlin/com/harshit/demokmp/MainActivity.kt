@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val androidVM: AndroidLoginViewModel = koinViewModel()
-            AndroidLoginEntryPoint(androidVM)
+            AndroidLoginEntryPoint(androidVM, true)
         }
     }
 }
@@ -26,5 +26,5 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppAndroidPreview() {
     val androidVM: AndroidLoginViewModel = koinViewModel()
-    AndroidLoginEntryPoint(androidVM)
+    AndroidLoginEntryPoint(androidVM, true)
 }

@@ -9,7 +9,7 @@ import com.harshit.demokmp.navigation.Route
 import com.harshit.demokmp.viewmodel.AndroidLoginViewModel
 
 @Composable
-fun NavHostAndroid(androidLoginViewModel: AndroidLoginViewModel) {
+fun NavHostAndroid(androidLoginViewModel: AndroidLoginViewModel,canNavigateBack: Boolean) {
     val backStack = remember { mutableStateListOf<Route>(Route.Login) }
 
     BackHandler(enabled = backStack.size > 1) {
@@ -21,6 +21,7 @@ fun NavHostAndroid(androidLoginViewModel: AndroidLoginViewModel) {
         onBackRequested = {
             // Optional: finish the activity or do nothing
         },
-        androidLoginViewModel
+        androidLoginViewModel,
+        canNavigateBack = canNavigateBack
     )
 }
