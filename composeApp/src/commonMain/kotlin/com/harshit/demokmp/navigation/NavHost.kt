@@ -6,13 +6,15 @@ import androidx.compose.runtime.remember
 import com.harshit.demokmp.presentation.screens.LoginPage
 import com.harshit.demokmp.presentation.screens.RegistrationPage
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.harshit.demokmp.interfaces.LoginHandler
 import com.harshit.demokmp.presentation.screens.SelectionTypePage
 
 
 @Composable
 fun NavHost(
     backStack: SnapshotStateList<Route> = remember { mutableStateListOf(Route.Login) },
-    onBackRequested: () -> Unit
+    onBackRequested: () -> Unit,
+    loginHandler: LoginHandler
 ) {
 
     val currentScreen = backStack.last()
@@ -29,7 +31,7 @@ fun NavHost(
         }
     }
     when (currentScreen) {
-        Route.Login -> LoginPage(onNavigate = { navigateTo(it) })
+        Route.Login -> LoginPage(onNavigate = { navigateTo(it) },loginHandler)
         Route.Registration -> RegistrationPage(
             onNavigate = { navigateTo(it) },
             onBack = { goBack() })

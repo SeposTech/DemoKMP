@@ -1,4 +1,4 @@
-package com.harshit.demokmp
+package com.harshit.demokmp.viewmodel
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
@@ -6,10 +6,10 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import com.harshit.demokmp.navigation.NavHost
 import com.harshit.demokmp.navigation.Route
-import com.harshit.demokmp.viewmodel.AndroidLoginViewModel
 
 @Composable
-fun NavHostAndroid(androidLoginViewModel: AndroidLoginViewModel) {
+fun AndroidLoginEntryPoint(viewmodel: AndroidLoginViewModel){
+
     val backStack = remember { mutableStateListOf<Route>(Route.Login) }
 
     BackHandler(enabled = backStack.size > 1) {
@@ -21,6 +21,6 @@ fun NavHostAndroid(androidLoginViewModel: AndroidLoginViewModel) {
         onBackRequested = {
             // Optional: finish the activity or do nothing
         },
-        androidLoginViewModel
+        viewmodel
     )
 }

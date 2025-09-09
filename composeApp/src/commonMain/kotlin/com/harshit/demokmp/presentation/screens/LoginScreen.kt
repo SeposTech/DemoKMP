@@ -38,6 +38,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.harshit.demokmp.domain.models.UserLoginRequest
+import com.harshit.demokmp.interfaces.LoginHandler
 import com.harshit.demokmp.navigation.Route
 import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
 import demokmp.composeapp.generated.resources.Res
@@ -48,10 +49,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun LoginPage(
     onNavigate: (Route) -> Unit,
-    loginViewModel: LoginViewModel
+    loginHandler: LoginHandler
 ) {
 
-    val loginState = loginViewModel.loginState.collectAsState(initial = null)
+    /*val loginState = loginViewModel.loginState.collectAsState(initial = null)
 
     loginState.value?.let { result ->
         result.onSuccess { response ->
@@ -61,10 +62,10 @@ fun LoginPage(
             // Show error message
         }
 
-    }
+    }*/
 
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("himanshumehra99@gmail.com") }
+    val password = remember { mutableStateOf("admin123@") }
     Surface(modifier = Modifier.fillMaxSize()) {
 
         Scaffold(
@@ -122,7 +123,7 @@ fun LoginPage(
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        loginViewModel.login(
+                        loginHandler.login(
                             UserLoginRequest(
                                 email = email.value,
                                 password = password.value
@@ -184,6 +185,11 @@ fun CommonTopBar(title: String) {
 @Preview
 @Composable
 fun PreviewLoginPage() {
+    val loginHandler = object : LoginHandler {
+        override fun login(request: UserLoginRequest) {
 
-    LoginPage(onNavigate = {},)
+        }
+
+    }
+    LoginPage(onNavigate = {}, loginHandler)
 }
