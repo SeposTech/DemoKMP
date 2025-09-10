@@ -25,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,10 +40,35 @@ import androidx.compose.ui.unit.sp
 import com.harshit.demokmp.domain.models.UserLoginRequest
 import com.harshit.demokmp.interfaces.LoginHandler
 import com.harshit.demokmp.navigation.Route
+import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
 import demokmp.composeapp.generated.resources.Res
 import demokmp.composeapp.generated.resources.ic_app_logo_512
+import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+
+@Composable
+fun ShowLoginPage(
+    onNavigate: (Route) -> Unit,
+    loginHandler: LoginHandler,
+    canNavigateBack: Boolean = false
+) {
+    val loginState = loginHandler.loginState.collectAsState()
+
+    when (loginState.value) {
+
+        is LoginViewModel.UiState.Loading -> LoaderPage()
+        is LoginViewModel.UiState.Success -> SelectionTypePage(onNavigate = {}, onBack = {})
+        is LoginViewModel.UiState.Error -> Unit
+        else -> LoginPage(
+            onNavigate = onNavigate,
+            loginHandler = loginHandler,
+            canNavigateBack = canNavigateBack
+        )
+
+    }
+}
 
 @Composable
 fun LoginPage(
@@ -51,17 +77,6 @@ fun LoginPage(
     canNavigateBack: Boolean = false
 ) {
 
-    /*val loginState = loginViewModel.loginState.collectAsState(initial = null)
-
-    loginState.value?.let { result ->
-        result.onSuccess { response ->
-            // Navigate on success
-        }
-        result.onFailure { error ->
-            // Show error message
-        }
-
-    }*/
 
     val email = remember { mutableStateOf("himanshumehra99@gmail.com") }
     val password = remember { mutableStateOf("admin123@") }
@@ -188,10 +203,13 @@ fun CommonTopBar(title: String, canNavigateBack: Boolean) {
 @Composable
 fun PreviewLoginPage() {
     val loginHandler = object : LoginHandler {
+        override val loginState: StateFlow<LoginViewModel.UiState?>
+            get() = TODO("Not yet implemented")
+
         override fun login(request: UserLoginRequest) {
 
         }
 
     }
-    LoginPage(onNavigate = {}, loginHandler)
+    ShowLoginPage(onNavigate = {}, loginHandler)
 }

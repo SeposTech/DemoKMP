@@ -8,6 +8,7 @@ import com.harshit.demokmp.presentation.screens.RegistrationPage
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.harshit.demokmp.interfaces.LoginHandler
 import com.harshit.demokmp.presentation.screens.SelectionTypePage
+import com.harshit.demokmp.presentation.screens.ShowLoginPage
 
 
 @Composable
@@ -32,7 +33,7 @@ fun NavHost(
         }
     }
     when (currentScreen) {
-        Route.Login -> LoginPage(onNavigate = { navigateTo(it) },loginHandler,canNavigateBack)
+        Route.Login -> ShowLoginPage(onNavigate = { navigateTo(it) },loginHandler,canNavigateBack)
         Route.Registration -> RegistrationPage(
             onNavigate = { navigateTo(it) },
             onBack = { goBack() })
