@@ -52,7 +52,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun ShowLoginPage(
     onNavigate: (Route) -> Unit,
     loginHandler: LoginHandler,
-    canNavigateBack: Boolean = false
+    canNavigateBack: Boolean = false,
+    onBack: () -> Unit
 ) {
     val loginState = loginHandler.loginState.collectAsState()
 
@@ -64,7 +65,8 @@ fun ShowLoginPage(
         else -> LoginPage(
             onNavigate = onNavigate,
             loginHandler = loginHandler,
-            canNavigateBack = canNavigateBack
+            canNavigateBack = canNavigateBack,
+            onBack = onBack
         )
 
     }
@@ -74,7 +76,8 @@ fun ShowLoginPage(
 fun LoginPage(
     onNavigate: (Route) -> Unit,
     loginHandler: LoginHandler,
-    canNavigateBack: Boolean = false
+    canNavigateBack: Boolean = false,
+    onBack: () -> Unit
 ) {
 
 
@@ -83,7 +86,7 @@ fun LoginPage(
     Surface(modifier = Modifier.fillMaxSize()) {
 
         Scaffold(
-            topBar = { CommonTopBar("Login", canNavigateBack) }
+            topBar = { CommonTopBar("Login", canNavigateBack, onBack) }
         ) { paddingValues ->   // paddingValues yaha add karo
             Column(
                 modifier = Modifier
@@ -170,7 +173,7 @@ fun LoginPage(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CommonTopBar(title: String, canNavigateBack: Boolean) {
+fun CommonTopBar(title: String, canNavigateBack: Boolean, onBack: () -> Unit) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -184,7 +187,7 @@ fun CommonTopBar(title: String, canNavigateBack: Boolean) {
         },
         navigationIcon = {
             if (canNavigateBack) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = onBack) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Default.ArrowBack,
                         contentDescription = "Back",
@@ -211,5 +214,5 @@ fun PreviewLoginPage() {
         }
 
     }
-    ShowLoginPage(onNavigate = {}, loginHandler)
+    ShowLoginPage(onNavigate = {}, loginHandler, onBack = {})
 }

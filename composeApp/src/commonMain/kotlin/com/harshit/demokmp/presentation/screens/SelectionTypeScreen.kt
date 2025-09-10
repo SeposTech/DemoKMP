@@ -102,7 +102,7 @@ fun SelectionTopBar(title: String,onBack: () -> Unit) {
             )
         },
         navigationIcon = {
-            IconButton(onClick = {onBack()}) {
+            IconButton(onClick = onBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Default.ArrowBack,
                     contentDescription = "Back",

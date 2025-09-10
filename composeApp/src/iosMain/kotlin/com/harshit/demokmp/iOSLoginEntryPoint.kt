@@ -11,9 +11,17 @@ import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
 fun iOSLoginEntryPoint(loginViewModel: LoginViewModel) {
     val backStack = remember { mutableStateListOf<Route>(Route.Login) }
 
+    fun goBack() {
+        if (backStack.size > 1) {
+            backStack.removeAt(backStack.lastIndex)
+        } else {
+
+        }
+    }
+
     NavHost(
         backStack = backStack,
-        onBackRequested = { /* iOS back handling */ },
+        onBackRequested = {goBack()},
         loginHandler = loginViewModel,
         canNavigateBack = false
     )

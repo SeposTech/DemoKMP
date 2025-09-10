@@ -33,7 +33,12 @@ fun NavHost(
         }
     }
     when (currentScreen) {
-        Route.Login -> ShowLoginPage(onNavigate = { navigateTo(it) },loginHandler,canNavigateBack)
+        Route.Login -> ShowLoginPage(
+            onNavigate = { navigateTo(it) },
+            loginHandler,
+            canNavigateBack,
+            onBack = { goBack() })
+
         Route.Registration -> RegistrationPage(
             onNavigate = { navigateTo(it) },
             onBack = { goBack() })
