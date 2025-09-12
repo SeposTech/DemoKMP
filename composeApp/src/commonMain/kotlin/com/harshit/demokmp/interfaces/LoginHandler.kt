@@ -6,5 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface LoginHandler {
     val loginState: StateFlow<LoginViewModel.UiState?>
+
+    val  isConnected: StateFlow<Boolean>
     fun login(request: UserLoginRequest)
 }

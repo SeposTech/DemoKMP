@@ -16,6 +16,8 @@ class AndroidLoginViewModel(
     private val sharedVM = LoginViewModel(userLoginUseCase)
     override val loginState: StateFlow<LoginViewModel.UiState?>
         get() = sharedVM.loginState
+    override val isConnected: StateFlow<Boolean>
+        get() = sharedVM.isConnected
 
     override fun onCleared() {
         super.onCleared()

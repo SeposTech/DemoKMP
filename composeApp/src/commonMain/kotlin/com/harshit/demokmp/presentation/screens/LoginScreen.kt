@@ -25,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.harshit.demokmp.connectivity.InternetManager
 import com.harshit.demokmp.domain.models.UserLoginRequest
 import com.harshit.demokmp.interfaces.LoginHandler
 import com.harshit.demokmp.navigation.Route
@@ -56,17 +58,33 @@ fun ShowLoginPage(
     onBack: () -> Unit
 ) {
     val loginState = loginHandler.loginState.collectAsState()
+    val status = InternetManager.isConnected.value
+
+    val email = remember { mutableStateOf("himanshumehra99@gmail.com") }
+    val password = remember { mutableStateOf("admin123@") }
 
     when (loginState.value) {
 
         is LoginViewModel.UiState.Loading -> LoaderPage()
         is LoginViewModel.UiState.Success -> SelectionTypePage(onNavigate = {}, onBack = {})
+        is LoginViewModel.UiState.NoInternet -> NoInternetPage(onRetry = {
+            loginHandler.login(
+                UserLoginRequest(
+                    email = email.value,
+                    password = password.value
+                )
+            )
+        })
+
         is LoginViewModel.UiState.Error -> Unit
         else -> LoginPage(
             onNavigate = onNavigate,
             loginHandler = loginHandler,
             canNavigateBack = canNavigateBack,
-            onBack = onBack
+            onBack = onBack,
+            status = status,
+            email = email,
+            password = password
         )
 
     }
@@ -77,12 +95,12 @@ fun LoginPage(
     onNavigate: (Route) -> Unit,
     loginHandler: LoginHandler,
     canNavigateBack: Boolean = false,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    status: Boolean,
+    email: MutableState<String>,
+    password: MutableState<String>
 ) {
 
-
-    val email = remember { mutableStateOf("himanshumehra99@gmail.com") }
-    val password = remember { mutableStateOf("admin123@") }
     Surface(modifier = Modifier.fillMaxSize()) {
 
         Scaffold(
@@ -161,7 +179,7 @@ fun LoginPage(
 
                 Text(
                     modifier = Modifier.clickable { onNavigate(Route.Registration) },
-                    text = "You don't have an account? Sign Up",
+                    text = "You don't have an account? Sign Up and Internet status is $status",
                     style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 )
             }
@@ -207,6 +225,8 @@ fun CommonTopBar(title: String, canNavigateBack: Boolean, onBack: () -> Unit) {
 fun PreviewLoginPage() {
     val loginHandler = object : LoginHandler {
         override val loginState: StateFlow<LoginViewModel.UiState?>
+            get() = TODO("Not yet implemented")
+        override val isConnected: StateFlow<Boolean>
             get() = TODO("Not yet implemented")
 
         override fun login(request: UserLoginRequest) {

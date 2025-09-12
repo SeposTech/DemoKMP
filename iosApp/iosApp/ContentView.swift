@@ -11,9 +11,21 @@ struct ComposeView: UIViewControllerRepresentable {
 }
 
 struct ContentView: View {
+    private var monitor: SwiftInternetMonitor?
+    
+    init() {
+            // Attach observer
+            let observer = IOSConnectivityObserver()
+            monitor = SwiftInternetMonitor(observer: observer)
+            monitor?.startMonitoring() // Now monitoring starts
+        }
+    
     var body: some View {
         ComposeView()
             .ignoresSafeArea()
+            .onDisappear {
+                monitor?.stopMonitoring()
+            }
     }
 }
 

@@ -1,5 +1,6 @@
 package com.harshit.demokmp.presentation.screens.viewmodel
 
+import com.harshit.demokmp.connectivity.InternetManager
 import com.harshit.demokmp.domain.models.LoginData
 import com.harshit.demokmp.domain.models.UserLoginRequest
 import com.harshit.demokmp.domain.models.UserLoginResponse
@@ -20,10 +21,26 @@ class LoginViewModel(
     private var _loginState = MutableStateFlow<UiState?>(null)
     override val loginState: StateFlow<UiState?> get() = _loginState
 
+    override val isConnected: StateFlow<Boolean>
+        get() = InternetManager.isConnected
+
+    init {
+        viewModelScope.launch {
+            isConnected.collect { connected ->
+                if (!connected)
+                _loginState.value = UiState.NoInternet(lastState = connected)
+
+            }
+        }
+    }
+
+
     sealed interface UiState {
         object Loading : UiState
         data class Success(val data: LoginData?) : UiState
         data class Error(val error: String?) : UiState
+
+        data class NoInternet(val lastState: Boolean?) : UiState
     }
 
     override fun login(request: UserLoginRequest) {
