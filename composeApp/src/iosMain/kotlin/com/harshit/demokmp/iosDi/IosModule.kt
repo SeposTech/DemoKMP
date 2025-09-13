@@ -1,5 +1,6 @@
 package com.harshit.demokmp.iosDi
 
+import com.harshit.demokmp.connectivity.ConnectivityObserver
 import com.harshit.demokmp.data.network.ApiClient
 import com.harshit.demokmp.data.network.repository.UserRepository
 import com.harshit.demokmp.domain.models.usecase.UserLoginUseCase
@@ -13,6 +14,8 @@ val iosModule = module{
 
     single { UserLoginUseCase(get()) }
 
-    single { LoginViewModel(get()) }
+    single { ConnectivityObserver() }
+
+    single { LoginViewModel(get(),get()) }
 
 }

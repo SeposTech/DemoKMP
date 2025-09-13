@@ -38,7 +38,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.harshit.demokmp.connectivity.InternetManager
 import com.harshit.demokmp.domain.models.UserLoginRequest
 import com.harshit.demokmp.interfaces.LoginHandler
 import com.harshit.demokmp.navigation.Route
@@ -58,7 +57,6 @@ fun ShowLoginPage(
     onBack: () -> Unit
 ) {
     val loginState = loginHandler.loginState.collectAsState()
-    val status = InternetManager.isConnected.value
 
     val email = remember { mutableStateOf("himanshumehra99@gmail.com") }
     val password = remember { mutableStateOf("admin123@") }
@@ -82,7 +80,6 @@ fun ShowLoginPage(
             loginHandler = loginHandler,
             canNavigateBack = canNavigateBack,
             onBack = onBack,
-            status = status,
             email = email,
             password = password
         )
@@ -96,7 +93,6 @@ fun LoginPage(
     loginHandler: LoginHandler,
     canNavigateBack: Boolean = false,
     onBack: () -> Unit,
-    status: Boolean,
     email: MutableState<String>,
     password: MutableState<String>
 ) {
@@ -179,7 +175,7 @@ fun LoginPage(
 
                 Text(
                     modifier = Modifier.clickable { onNavigate(Route.Registration) },
-                    text = "You don't have an account? Sign Up and Internet status is $status",
+                    text = "You don't have an account? Sign Up",
                     style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 )
             }
@@ -225,8 +221,6 @@ fun CommonTopBar(title: String, canNavigateBack: Boolean, onBack: () -> Unit) {
 fun PreviewLoginPage() {
     val loginHandler = object : LoginHandler {
         override val loginState: StateFlow<LoginViewModel.UiState?>
-            get() = TODO("Not yet implemented")
-        override val isConnected: StateFlow<Boolean>
             get() = TODO("Not yet implemented")
 
         override fun login(request: UserLoginRequest) {

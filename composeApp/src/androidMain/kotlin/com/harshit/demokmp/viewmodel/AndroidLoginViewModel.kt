@@ -1,6 +1,7 @@
 package com.harshit.demokmp.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.harshit.demokmp.connectivity.ConnectivityObserver
 import com.harshit.demokmp.domain.models.UserLoginRequest
 import com.harshit.demokmp.domain.models.UserLoginResponse
 import com.harshit.demokmp.domain.models.usecase.UserLoginUseCase
@@ -9,15 +10,14 @@ import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
 import kotlinx.coroutines.flow.StateFlow
 
 class AndroidLoginViewModel(
-    private val userLoginUseCase: UserLoginUseCase
+    private val userLoginUseCase: UserLoginUseCase,
+    private val connectivityObserver: ConnectivityObserver
 ) : ViewModel(), LoginHandler {
 
 
-    private val sharedVM = LoginViewModel(userLoginUseCase)
+    private val sharedVM = LoginViewModel(userLoginUseCase,connectivityObserver)
     override val loginState: StateFlow<LoginViewModel.UiState?>
         get() = sharedVM.loginState
-    override val isConnected: StateFlow<Boolean>
-        get() = sharedVM.isConnected
 
     override fun onCleared() {
         super.onCleared()
@@ -25,6 +25,7 @@ class AndroidLoginViewModel(
     }
 
     override fun login(request: UserLoginRequest) {
+        println("AndroidLoginViewModel called...")
         sharedVM.login(request)
     }
 

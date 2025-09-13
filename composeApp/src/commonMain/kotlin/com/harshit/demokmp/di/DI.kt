@@ -13,5 +13,6 @@ val commonModule = module {
 
     single { UserLoginUseCase(get()) }
 
-    single { LoginViewModel(get()) }
+
+    single { LoginViewModel(get(),get()) }
 }
