@@ -28,14 +28,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.harshit.demokmp.domain.models.StoreListResult
-import com.harshit.demokmp.interfaces.StoreListHandler
 import com.harshit.demokmp.presentation.screens.viewmodel.StoreListViewModel
+import com.harshit.demokmp.utils.PlatformStoreListHelper
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun StoreListPage(storeListHandler: StoreListHandler) {
+fun StoreListPage(platformStoreListHelper: PlatformStoreListHelper) {
 
-    val uiState = storeListHandler.storeState.collectAsState()
+    val uiState = platformStoreListHelper.storeState.collectAsState()
 
     when (val result = uiState.value) {
         is StoreListViewModel.UiState.Loading -> {
@@ -55,7 +55,7 @@ fun StoreListPage(storeListHandler: StoreListHandler) {
     }
 
     LaunchedEffect(Unit) {
-        storeListHandler.getStoreList()
+        platformStoreListHelper.getStoreList()
     }
 
 }

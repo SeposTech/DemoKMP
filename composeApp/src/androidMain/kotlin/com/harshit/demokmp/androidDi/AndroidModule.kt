@@ -8,9 +8,11 @@ import com.harshit.demokmp.domain.models.usecase.StoreListUseCase
 import com.harshit.demokmp.domain.models.usecase.UserLoginUseCase
 import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
 import com.harshit.demokmp.presentation.screens.viewmodel.StoreListViewModel
-import com.harshit.demokmp.viewmodel.AndroidStoreListViewModel
+import com.harshit.demokmp.utils.PlatformLoginHelper
+import com.harshit.demokmp.utils.PlatformStoreListHelper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import kotlin.math.sin
 
 val androidModule = module {
     single { ApiClient() }
@@ -27,10 +29,12 @@ val androidModule = module {
     single { LoginViewModel(get(),get()) }
     single { StoreListViewModel(get()) }
 
+    single { ConnectivityObserver(get()) }
+
+    single { PlatformLoginHelper(get(),get(),get()) }
+
+    single { PlatformStoreListHelper(get(),get()) }
 
 
     single { ConnectivityObserver(get()) }
-
-
-    viewModel { AndroidStoreListViewModel(get()) }
 }

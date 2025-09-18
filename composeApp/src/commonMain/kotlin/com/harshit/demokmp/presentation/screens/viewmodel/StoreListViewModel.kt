@@ -2,7 +2,6 @@ package com.harshit.demokmp.presentation.screens.viewmodel
 
 import com.harshit.demokmp.domain.models.StoreLisData
 import com.harshit.demokmp.domain.models.usecase.StoreListUseCase
-import com.harshit.demokmp.interfaces.StoreListHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class StoreListViewModel(
     private val storeListUseCase: StoreListUseCase
-): CommonViewModel(),StoreListHandler {
+): CommonViewModel() {
 
     sealed interface UiState {
         object Loading: UiState
@@ -20,10 +19,10 @@ class StoreListViewModel(
     }
 
     private var _uiState = MutableStateFlow<UiState>(UiState.Loading)
-    override var storeState: StateFlow<UiState?> = _uiState.asStateFlow()
+    var storeState: StateFlow<UiState?> = _uiState.asStateFlow()
 
 
-    override fun getStoreList() {
+    fun getStoreList() {
         _uiState.value = UiState.Loading
         viewModelScope.launch {
             try {

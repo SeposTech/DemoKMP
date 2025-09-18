@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import com.harshit.demokmp.navigation.NavHost
 import com.harshit.demokmp.navigation.Route
-import com.harshit.demokmp.presentation.screens.viewmodel.StoreListViewModel
 import com.harshit.demokmp.utils.PlatformLoginHelper
+import com.harshit.demokmp.utils.PlatformStoreListHelper
 
 @Composable
-fun iOSLoginEntryPoint(platformLoginHelper: PlatformLoginHelper,storeListViewModel: StoreListViewModel) {
+fun iOSLoginEntryPoint(platformLoginHelper: PlatformLoginHelper,platformStoreListHelper: PlatformStoreListHelper) {
     val backStack = remember { mutableStateListOf<Route>(Route.Login) }
 
     fun goBack() {
@@ -24,7 +24,7 @@ fun iOSLoginEntryPoint(platformLoginHelper: PlatformLoginHelper,storeListViewMod
         backStack = backStack,
         onBackRequested = {goBack()},
         platformLoginHelper = platformLoginHelper,
-        storeListHandler = storeListViewModel,
+        platformStoreListHelper = platformStoreListHelper,
         canNavigateBack = false
     )
 }
