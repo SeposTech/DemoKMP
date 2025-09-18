@@ -39,24 +39,22 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.harshit.demokmp.domain.models.UserLoginRequest
-import com.harshit.demokmp.interfaces.LoginHandler
 import com.harshit.demokmp.navigation.Route
 import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
+import com.harshit.demokmp.utils.PlatformLoginHelper
 import demokmp.composeapp.generated.resources.Res
 import demokmp.composeapp.generated.resources.ic_app_logo_512
-import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
 fun ShowLoginPage(
     onNavigate: (Route) -> Unit,
-    loginHandler: LoginHandler,
+    platformLoginHelper: PlatformLoginHelper,
     canNavigateBack: Boolean = false,
     onBack: () -> Unit
 ) {
-    val loginState = loginHandler.loginState.collectAsState()
+    val loginState = platformLoginHelper.loginState.collectAsState()
 
     val email = remember { mutableStateOf("himanshumehra99@gmail.com") }
     val password = remember { mutableStateOf("admin123@") }
@@ -66,7 +64,7 @@ fun ShowLoginPage(
         is LoginViewModel.UiState.Loading -> LoaderPage()
         is LoginViewModel.UiState.Success -> SelectionTypePage(onNavigate = onNavigate, onBack = {})
         is LoginViewModel.UiState.NoInternet -> NoInternetPage(onRetry = {
-            loginHandler.login(
+            platformLoginHelper.login(
                 UserLoginRequest(
                     email = email.value,
                     password = password.value
@@ -77,7 +75,7 @@ fun ShowLoginPage(
         is LoginViewModel.UiState.Error -> Unit
         else -> LoginPage(
             onNavigate = onNavigate,
-            loginHandler = loginHandler,
+            platformLoginHelper = platformLoginHelper,
             canNavigateBack = canNavigateBack,
             onBack = onBack,
             email = email,
@@ -90,7 +88,7 @@ fun ShowLoginPage(
 @Composable
 fun LoginPage(
     onNavigate: (Route) -> Unit,
-    loginHandler: LoginHandler,
+    platformLoginHelper: PlatformLoginHelper,
     canNavigateBack: Boolean = false,
     onBack: () -> Unit,
     email: MutableState<String>,
@@ -154,7 +152,7 @@ fun LoginPage(
                 Button(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
-                        loginHandler.login(
+                        platformLoginHelper.login(
                             UserLoginRequest(
                                 email = email.value,
                                 password = password.value
@@ -216,17 +214,12 @@ fun CommonTopBar(title: String, canNavigateBack: Boolean, onBack: () -> Unit) {
 
 }
 
+/*
 @Preview
 @Composable
 fun PreviewLoginPage() {
-    val loginHandler = object : LoginHandler {
-        override val loginState: StateFlow<LoginViewModel.UiState?>
-            get() = TODO("Not yet implemented")
+   val platformLoginHelper = object : PlatformLoginHelper() {
 
-        override fun login(request: UserLoginRequest) {
-
-        }
-
-    }
+   }
     ShowLoginPage(onNavigate = {}, loginHandler, onBack = {})
-}
+}*/

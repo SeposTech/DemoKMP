@@ -8,7 +8,6 @@ import com.harshit.demokmp.domain.models.usecase.StoreListUseCase
 import com.harshit.demokmp.domain.models.usecase.UserLoginUseCase
 import com.harshit.demokmp.presentation.screens.viewmodel.LoginViewModel
 import com.harshit.demokmp.presentation.screens.viewmodel.StoreListViewModel
-import com.harshit.demokmp.viewmodel.AndroidLoginViewModel
 import com.harshit.demokmp.viewmodel.AndroidStoreListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -33,7 +32,5 @@ val androidModule = module {
     single { ConnectivityObserver(get()) }
 
 
-
-    viewModel { AndroidLoginViewModel(get(),get()) }
     viewModel { AndroidStoreListViewModel(get()) }
 }
