@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.harshit.demokmp.viewmodel.AndroidLoginEntryPoint
 import com.harshit.demokmp.viewmodel.AndroidLoginViewModel
+import com.harshit.demokmp.viewmodel.AndroidStoreListViewModel
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val androidVM: AndroidLoginViewModel = koinViewModel()
-            AndroidLoginEntryPoint(androidVM, true)
+            val androidStoreViewmodel: AndroidStoreListViewModel = koinViewModel()
+            AndroidLoginEntryPoint(androidVM,androidStoreViewmodel, true)
         }
     }
 }
@@ -26,5 +28,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppAndroidPreview() {
     val androidVM: AndroidLoginViewModel = koinViewModel()
-    AndroidLoginEntryPoint(androidVM, true)
+    val androidStoreViewmodel: AndroidStoreListViewModel = koinViewModel()
+    AndroidLoginEntryPoint(androidVM,androidStoreViewmodel, true)
 }

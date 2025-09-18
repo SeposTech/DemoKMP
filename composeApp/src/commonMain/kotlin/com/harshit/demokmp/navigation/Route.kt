@@ -4,4 +4,6 @@ sealed class Route {
     object Login : Route()
     object Registration: Route()
     object SelectionType: Route()
+
+    object StoreList: Route()
 }

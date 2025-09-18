@@ -64,7 +64,7 @@ fun ShowLoginPage(
     when (loginState.value) {
 
         is LoginViewModel.UiState.Loading -> LoaderPage()
-        is LoginViewModel.UiState.Success -> SelectionTypePage(onNavigate = {}, onBack = {})
+        is LoginViewModel.UiState.Success -> SelectionTypePage(onNavigate = onNavigate, onBack = {})
         is LoginViewModel.UiState.NoInternet -> NoInternetPage(onRetry = {
             loginHandler.login(
                 UserLoginRequest(

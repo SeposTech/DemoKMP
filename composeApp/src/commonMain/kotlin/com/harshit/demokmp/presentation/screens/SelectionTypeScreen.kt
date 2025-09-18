@@ -54,7 +54,8 @@ fun SelectionTypePage(onNavigate:(Route)-> Unit,onBack: () -> Unit) {
                     contentDescription = "Logo"
                 )
 
-                Button(modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp), onClick = {}) {
+                Button(modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp), onClick = {onNavigate(
+                    Route.StoreList)}) {
                     Text(
                         text = "Takeaway",
                         style = TextStyle(
@@ -65,7 +66,8 @@ fun SelectionTypePage(onNavigate:(Route)-> Unit,onBack: () -> Unit) {
                     )
                 }
 
-                Button(modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp), onClick = {}) {
+                Button(modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp), onClick = {onNavigate(
+                    Route.StoreList)}) {
                     Text(
                         text = "Grocery",
                         style = TextStyle(

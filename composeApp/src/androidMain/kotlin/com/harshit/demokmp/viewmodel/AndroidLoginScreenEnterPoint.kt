@@ -8,9 +8,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.harshit.demokmp.navigation.NavHost
 import com.harshit.demokmp.navigation.Route
+import com.harshit.demokmp.presentation.screens.viewmodel.StoreListViewModel
 
 @Composable
-fun AndroidLoginEntryPoint(viewmodel: AndroidLoginViewModel, canNavigateBack: Boolean) {
+fun AndroidLoginEntryPoint(viewmodel: AndroidLoginViewModel,storeListViewModel: AndroidStoreListViewModel, canNavigateBack: Boolean) {
 
     val backStack = remember { mutableStateListOf<Route>(Route.Login) }
     val context = LocalContext.current
@@ -34,6 +35,7 @@ fun AndroidLoginEntryPoint(viewmodel: AndroidLoginViewModel, canNavigateBack: Bo
             (context as Activity).finish()
         },
         viewmodel,
+        storeListHandler = storeListViewModel,
         canNavigateBack = canNavigateBack
     )
 }

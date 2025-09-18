@@ -4,5 +4,5 @@ import androidx.compose.ui.window.ComposeUIViewController
 
 fun MainViewController() = ComposeUIViewController {
     initKoinOnce()
-    iOSLoginEntryPoint(loginViewModel = iOSViewModelInjector.loginViewModel)
+    iOSLoginEntryPoint(loginViewModel = iOSViewModelInjector.loginViewModel, storeListViewModel = iOSViewModelInjector.storeListViewModel)
 }

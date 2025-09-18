@@ -7,8 +7,10 @@ import com.harshit.demokmp.presentation.screens.LoginPage
 import com.harshit.demokmp.presentation.screens.RegistrationPage
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.harshit.demokmp.interfaces.LoginHandler
+import com.harshit.demokmp.interfaces.StoreListHandler
 import com.harshit.demokmp.presentation.screens.SelectionTypePage
 import com.harshit.demokmp.presentation.screens.ShowLoginPage
+import com.harshit.demokmp.presentation.screens.StoreListPage
 
 
 @Composable
@@ -16,6 +18,7 @@ fun NavHost(
     backStack: SnapshotStateList<Route> = remember { mutableStateListOf(Route.Login) },
     onBackRequested: () -> Unit,
     loginHandler: LoginHandler,
+    storeListHandler: StoreListHandler,
     canNavigateBack: Boolean
 ) {
 
@@ -47,5 +50,11 @@ fun NavHost(
             onNavigate = { navigateTo(it) },
             onBack = { goBack() }
         )
+
+        Route.StoreList -> StoreListPage(
+            storeListHandler = storeListHandler
+        )
+
+
     }
 }
