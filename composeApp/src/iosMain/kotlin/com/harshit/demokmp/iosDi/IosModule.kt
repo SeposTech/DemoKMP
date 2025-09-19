@@ -2,6 +2,8 @@ package com.harshit.demokmp.iosDi
 
 import com.harshit.demokmp.connectivity.ConnectivityObserver
 import com.harshit.demokmp.data.network.ApiClient
+import com.harshit.demokmp.data.network.ApiService
+import com.harshit.demokmp.data.network.ApiServiceImpl
 import com.harshit.demokmp.data.network.repository.StoreListRepository
 import com.harshit.demokmp.data.network.repository.UserRepository
 import com.harshit.demokmp.domain.models.usecase.StoreListUseCase
@@ -12,6 +14,10 @@ import org.koin.dsl.module
 
 val iosModule = module{
     single { ApiClient() }
+
+    single { get<ApiClient>().client }
+
+    single<ApiService> { ApiServiceImpl(get()) }
 
     single { UserRepository(get()) }
     single { StoreListRepository(get()) }

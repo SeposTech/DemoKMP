@@ -22,7 +22,7 @@ import io.ktor.serialization.kotlinx.json.json
 
 class ApiClient {
     // HttpClient instance
-    private val client = HttpClient {
+     val client = HttpClient {
         install(ContentNegotiation) {
             json(
                 kotlinx.serialization.json.Json {
@@ -41,30 +41,6 @@ class ApiClient {
 
             }// Android Studio console me log
         }
-    }
-
-    suspend fun userLogin(userLoginRequest: UserLoginRequest): UserLoginResponse {
-        return client.post(UR_LOGIN) {
-            contentType(ContentType.Application.Json)
-            setBody(userLoginRequest)
-        }.body()
-    }
-
-    suspend fun getStoreList(
-        searchType: String = "2",
-        sort: String = "1",
-        start: String = "0",
-        limit: String = "100",
-        vendorType: Int = 0
-    ): StoreListResponse {
-     return client.get(URL_STORE_LIST) {
-         contentType(ContentType.Application.Json)
-         parameter("searchType", searchType)
-         parameter("sort", sort)
-         parameter("start", start)
-         parameter("limit", limit)
-         parameter("vendor_type", vendorType)
-     }.body()
     }
 
 }
