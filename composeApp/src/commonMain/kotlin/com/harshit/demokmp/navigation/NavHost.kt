@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import com.harshit.demokmp.presentation.screens.RegistrationPage
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.harshit.demokmp.presentation.screens.CategoryPage
 import com.harshit.demokmp.presentation.screens.SelectionTypePage
 import com.harshit.demokmp.presentation.screens.ShowLoginPage
 import com.harshit.demokmp.presentation.screens.StoreListPage
@@ -51,9 +52,15 @@ fun NavHost(
         )
 
         Route.StoreList -> StoreListPage(
-        platformStoreListHelper = platformStoreListHelper
+        platformStoreListHelper = platformStoreListHelper,
+            onStoreClick = { vendorId->
+                navigateTo(Route.Category(vendorId))
+            }
         )
 
+        Route.Category(vendorId = "") -> CategoryPage()
 
+
+        else -> Unit
     }
 }

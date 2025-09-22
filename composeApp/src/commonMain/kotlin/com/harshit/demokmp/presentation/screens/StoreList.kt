@@ -1,4 +1,5 @@
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,11 +23,12 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun StoreListRow(storeListResult: StoreListResult?) {
+fun StoreListRow(storeListResult: StoreListResult?,onStoreClick:(vendorId: String?)-> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable{onStoreClick(storeListResult?.vendor_id)},
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
@@ -70,6 +72,6 @@ fun PreviewStoreListRow() {
         storeListResult = StoreListResult(
             vendor_name = "Demo Vendor",
             vendor_address = "123, Main Street, City"
-        )
+        ), onStoreClick = {}
     )
 }

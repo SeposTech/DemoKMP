@@ -33,7 +33,7 @@ import com.harshit.demokmp.utils.PlatformStoreListHelper
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun StoreListPage(platformStoreListHelper: PlatformStoreListHelper) {
+fun StoreListPage(platformStoreListHelper: PlatformStoreListHelper,onStoreClick:(vendorId: String?)-> Unit) {
 
     val uiState = platformStoreListHelper.storeState.collectAsState()
 
@@ -43,7 +43,7 @@ fun StoreListPage(platformStoreListHelper: PlatformStoreListHelper) {
         }
 
         is StoreListViewModel.UiState.Success -> {
-            ShowStoreList(result.data?.result)
+            ShowStoreList(result.data?.result,onStoreClick)
         }
 
         is StoreListViewModel.UiState.Error -> {}
@@ -61,7 +61,7 @@ fun StoreListPage(platformStoreListHelper: PlatformStoreListHelper) {
 }
 
 @Composable
-fun ShowStoreList(result: List<StoreListResult>?) {
+fun ShowStoreList(result: List<StoreListResult>?, onStoreClick: (String?) -> Unit) {
 
     Surface(modifier = Modifier.fillMaxSize()) {
 
@@ -81,7 +81,9 @@ fun ShowStoreList(result: List<StoreListResult>?) {
                     ) {
 
                         items(it) { storeListResult ->
-                            StoreListRow(storeListResult)
+                            StoreListRow(storeListResult, onStoreClick = { vendorId->
+                                onStoreClick(vendorId)
+                            })
 
                         }
                     }
@@ -129,5 +131,5 @@ fun CommonTopBar(title: String) {
 @Preview
 @Composable
 fun PreviewStoreListPage() {
-    ShowStoreList(null)
+    ShowStoreList(null, onStoreClick = {})
 }

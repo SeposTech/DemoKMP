@@ -6,4 +6,5 @@ sealed class Route {
     object SelectionType: Route()
 
     object StoreList: Route()
+    data class Category(val vendorId: String?): Route()
 }
